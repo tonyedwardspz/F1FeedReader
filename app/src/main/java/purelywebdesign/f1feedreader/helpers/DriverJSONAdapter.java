@@ -4,10 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,36 +14,10 @@ import purelywebdesign.f1feedreader.R;
 /**
  * Created by Anthony on 22/02/2015.
  */
-public class DriverJSONAdapter extends BaseAdapter{
-
-    Context mContext;
-    LayoutInflater mInflater;
-    JSONArray mJsonArray;
+public class DriverJSONAdapter extends JSONAdapter{
 
     public DriverJSONAdapter(Context context, LayoutInflater inflater){
-        mContext = context;
-        mInflater = inflater;
-        mJsonArray = new JSONArray();
-    }
-
-    @Override
-    public int getCount() {
-        try {
-            return mJsonArray.length();
-        } catch (Exception e){
-            e.printStackTrace();
-            return 0;
-        }
-    }
-
-    @Override
-    public JSONObject getItem(int position) {
-        return mJsonArray.optJSONObject(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
+        super(context, inflater);
     }
 
     @Override
@@ -100,11 +72,6 @@ public class DriverJSONAdapter extends BaseAdapter{
         holder.driverPoints.setText(driverPoints);
 
         return convertView;
-    }
-
-    public void updateData(JSONArray jsonArray){
-        mJsonArray = jsonArray;
-        notifyDataSetChanged();
     }
 
     private static class ViewHolder {

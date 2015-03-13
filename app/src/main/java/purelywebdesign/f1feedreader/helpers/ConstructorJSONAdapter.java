@@ -4,10 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,36 +14,14 @@ import purelywebdesign.f1feedreader.R;
 /**
  * Created by Anthony on 22/02/2015.
  */
-public class ConstructorJSONAdapter extends BaseAdapter{
+public class ConstructorJSONAdapter extends JSONAdapter{
 
-    Context mContext;
-    LayoutInflater mInflater;
-    JSONArray mJsonArray;
+    //Context mContext;
+    //LayoutInflater mInflater;
+    //JSONArray mJsonArray;
 
     public ConstructorJSONAdapter(Context context, LayoutInflater inflater){
-        mContext = context;
-        mInflater = inflater;
-        mJsonArray = new JSONArray();
-    }
-
-    @Override
-    public int getCount() {
-        try {
-            return mJsonArray.length();
-        } catch (Exception e){
-            e.printStackTrace();
-            return 0;
-        }
-    }
-
-    @Override
-    public JSONObject getItem(int position) {
-        return mJsonArray.optJSONObject(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
+        super(context, inflater);
     }
 
     @Override
@@ -54,7 +30,7 @@ public class ConstructorJSONAdapter extends BaseAdapter{
 
         // check that the view does not exist
         if (convertView == null){
-            convertView = mInflater.inflate(R.layout.constructor_standings_row, null);
+            convertView = super.mInflater.inflate(R.layout.constructor_standings_row, null);
 
             // create a new holder with the subviews
             holder = new ViewHolder();
@@ -100,12 +76,6 @@ public class ConstructorJSONAdapter extends BaseAdapter{
         holder.constructorPoints.setText(constructorPoints);
 
         return convertView;
-    }
-
-    public void updateData(JSONArray jsonArray){
-
-        mJsonArray = jsonArray;
-        notifyDataSetChanged();
     }
 
     private static class ViewHolder {

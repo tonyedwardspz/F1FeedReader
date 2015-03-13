@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -58,9 +57,6 @@ public class JSONAdapter extends BaseAdapter{
     }
 
     private static class ViewHolder {
-        public TextView driverPosition;
-        public TextView driverName;
-        public TextView driverPoints;
     }
 
 

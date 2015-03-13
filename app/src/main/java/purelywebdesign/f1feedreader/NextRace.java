@@ -79,7 +79,7 @@ public class NextRace extends Fragment implements AdapterView.OnItemClickListene
     public static void prepareNextRaceJson(JSONObject jsonObject){
         JSONObject thisRace;
         String raceName = "Rubbish title";
-        String raceDate = "";
+        String raceDate;
         String roundNumber = "";
         JSONArray races;
 
