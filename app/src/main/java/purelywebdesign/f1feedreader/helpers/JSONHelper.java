@@ -30,7 +30,7 @@ public class JSONHelper {
 
             @Override
             public void onSuccess(JSONObject jsonObject){
-                Log.d("JSON REPLY: ", jsonObject.toString());
+                //Log.d("JSON REPLY: ", jsonObject.toString());
 
                 switch (reqType){
                     case 1:

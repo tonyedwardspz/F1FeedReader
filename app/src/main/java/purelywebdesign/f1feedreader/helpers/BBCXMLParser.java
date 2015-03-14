@@ -92,7 +92,7 @@ public class BBCXMLParser {
                 skip(parser);
             }
         }
-        Log.d("bbc title", title);
+        Log.d("News item title", title);
         return new BBCItem(title, description, url, pubDate, thumbnailURL);
     }
 

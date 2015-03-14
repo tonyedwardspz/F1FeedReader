@@ -8,11 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.TextView;
+import android.widget.ListView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import purelywebdesign.f1feedreader.entities.BBCItem;
+import purelywebdesign.f1feedreader.helpers.NewItemAdapter;
 import purelywebdesign.f1feedreader.helpers.XMLHelper;
 
 
@@ -20,8 +24,10 @@ public class NewsFeed extends Fragment implements AdapterView.OnItemClickListene
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_SECTION_NUMBER = "section_number";
+    private static final String QUERY_URL = "http://feeds.bbci.co.uk/sport/0/formula1/rss.xml";
+    public static NewItemAdapter newsAdapter = null;
+    public static ListView newsList;
 
-    public static TextView newsTitle;
 
     public static NewsFeed newInstance(int sectionNumber) {
         NewsFeed fragment = new NewsFeed();
@@ -41,8 +47,10 @@ public class NewsFeed extends Fragment implements AdapterView.OnItemClickListene
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_news_feed, container, false);
 
-        newsTitle = (TextView) rootView.findViewById(R.id.newsTitle);
-        XMLHelper.submitQuery("http://feeds.bbci.co.uk/sport/0/formula1/rss.xml");
+        newsAdapter = new NewItemAdapter(getActivity(), inflater);
+        newsList = (ListView) rootView.findViewById(R.id.news_listview);
+        newsList.setAdapter(newsAdapter);
+        XMLHelper.submitQuery(QUERY_URL);
 
         return rootView;
     }
@@ -62,9 +70,30 @@ public class NewsFeed extends Fragment implements AdapterView.OnItemClickListene
     }
 
 
-    public static void prepareXML (ArrayList<BBCItem> items){
-        Log.d("prepare xml", "");
+    public static void prepareJSON (JSONObject jsonObject){
+        Log.d("NEWS JSON REPLY", jsonObject.toString());
+        ArrayList<BBCItem> bbcItems = new ArrayList();
 
-        newsTitle.setText(items.get(0).getTitle());
+        try {
+            JSONObject js1 = jsonObject.getJSONObject("rss");
+            JSONObject js2 = js1.getJSONObject("channel");
+            JSONArray items = js2.getJSONArray("item");
+
+            for (int i = 0; i < 10; i++){
+                JSONObject thisItem = items.getJSONObject(i);
+                String title = thisItem .optString("title");
+                String description = thisItem .optString("description");
+                String link = thisItem .optString("link");
+                String pubDate = thisItem .optString("pubDate");
+                String thumb = thisItem .getJSONArray("media:thumbnail").getJSONObject(0).optString("url");
+
+                BBCItem newsItem = new BBCItem( title, description, link, pubDate, thumb );
+                bbcItems.add(newsItem);
+            }
+
+            newsAdapter.updateData(bbcItems);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

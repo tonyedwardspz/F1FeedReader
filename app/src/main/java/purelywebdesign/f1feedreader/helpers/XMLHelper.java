@@ -6,13 +6,11 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.apache.http.Header;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.util.ArrayList;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.XML;
 
 import purelywebdesign.f1feedreader.NewsFeed;
-import purelywebdesign.f1feedreader.entities.BBCItem;
 
 /**
  * Created by Anthony on 13/03/2015.
@@ -20,7 +18,7 @@ import purelywebdesign.f1feedreader.entities.BBCItem;
 public class XMLHelper {
 
     /**
-     * Retries data from a XML feed
+     * Retries data from a XML feed, converting it to JSON object
      * @param  query_url: The REST url to call for data
      * @return jsonObject: The retrieved data
      */
@@ -33,15 +31,15 @@ public class XMLHelper {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody){
 
                 String s = new String(responseBody);
-                InputStream is = new ByteArrayInputStream(responseBody);
-                ArrayList<BBCItem> items = new ArrayList();
-
-                try {
-                    items = BBCXMLParser.parse(is);
-                } catch (Throwable throwable){
-                    Log.e("Try bbc feed: ", throwable.getMessage());
+                JSONObject results = null;
+                try{
+                    results = XML.toJSONObject(s);
+                    NewsFeed.prepareJSON(results);
+                } catch (JSONException e) {
+                    Log.e("JSON exception", e.getMessage());
+                    e.printStackTrace();
                 }
-                NewsFeed.prepareXML(items);
+
             }
 
             @Override

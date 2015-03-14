@@ -17,6 +17,7 @@ import purelywebdesign.f1feedreader.R;
 public class DriverJSONAdapter extends JSONAdapter{
 
     public DriverJSONAdapter(Context context, LayoutInflater inflater){
+
         super(context, inflater);
     }
 
