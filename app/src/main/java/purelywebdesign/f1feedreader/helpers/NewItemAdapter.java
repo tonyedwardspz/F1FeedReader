@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import purelywebdesign.f1feedreader.R;
@@ -74,6 +76,7 @@ public class NewItemAdapter extends BaseAdapter {
 
         holder.newsTitle.setText(thisItem.getTitle());
         holder.newsSource.setText(thisItem.description);
+        Picasso.with(mContext).load(thisItem.getThumbnailURL()).into(holder.image);
         //holder.driverPoints.setText(driverPoints);
 
         return convertView;

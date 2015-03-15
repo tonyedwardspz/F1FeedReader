@@ -85,7 +85,7 @@ public class NewsFeed extends Fragment implements AdapterView.OnItemClickListene
                 String description = thisItem .optString("description");
                 String link = thisItem .optString("link");
                 String pubDate = thisItem .optString("pubDate");
-                String thumb = thisItem .getJSONArray("media:thumbnail").getJSONObject(0).optString("url");
+                String thumb = thisItem .getJSONArray("media:thumbnail").getJSONObject(1).optString("url");
 
                 BBCItem newsItem = new BBCItem( title, description, link, pubDate, thumb );
                 bbcItems.add(newsItem);
