@@ -35,8 +35,6 @@ public class JSONHelper {
 
             @Override
             public void onSuccess(JSONObject jsonObject){
-                //Log.d("JSON REPLY: ", jsonObject.toString());
-
                 switch (reqType){
                     case 1:
                         DriverStandings.prepareDriverJSON(jsonObject);
@@ -60,10 +58,9 @@ public class JSONHelper {
 
     /**
     * Takes the BBC news feed and creates a set of NewsItem objects.
-    * Sends the array of object to the adapter for displaying
+    * Sends the array of objects to the adapter for displaying
     */
     public static void prepareBBCJSON (JSONObject jsonObject){
-        Log.d("NEWS JSON REPLY", jsonObject.toString());
         ArrayList<NewsItem> newsItems = new ArrayList();
 
         try {
@@ -91,10 +88,9 @@ public class JSONHelper {
 
     /**
      * Takes the Telegraph news feed and creates a set of NewsItem objects.
-     * Sends the array of object to the adapter for displaying.
+     * Sends the array of objects to the adapter for displaying.
      */
     public static void prepareTelegraphJSON (JSONObject jsonObject){
-        Log.d("NEWS JSON REPLY", jsonObject.toString());
         ArrayList<NewsItem> newsItems = new ArrayList();
 
         try {
@@ -112,7 +108,38 @@ public class JSONHelper {
                 String link = thisItem .optString("link");
                 String pubDate = thisItem .optString("pubDate");
 
-                NewsItem newsItem = new NewsItem( title, description, link, pubDate);
+                NewsItem newsItem = new NewsItem( title, description, link, pubDate );
+                newsItems.add(newsItem);
+            }
+
+            NewsFeed.newsAdapter.updateData(newsItems);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Takes the Crash.net news feed and creates a set of NewsItem objects.
+     * Sends the array of objects to the adapter for displaying.
+     */
+    public static void prepareCrashJSON (JSONObject jsonObject){
+        ArrayList<NewsItem> newsItems = new ArrayList();
+
+        try {
+            JSONObject js1 = jsonObject.getJSONObject("rss");
+            JSONObject js2 = js1.getJSONObject("channel");
+            JSONArray items = js2.getJSONArray("item");
+
+            for (int i = 0; i < 10; i++){
+                JSONObject thisItem = items.getJSONObject(i);
+                String title = thisItem .optString("title");
+                String description = thisItem .optString("description");
+                description = Utilities.prepareTelegraphDescription(description);
+                String link = thisItem .optString("link");
+                String pubDate = thisItem .optString("pubDate");
+                String thumb = thisItem .getJSONObject("media:thumbnail").optString("url");
+
+                NewsItem newsItem = new NewsItem( title, description, link, pubDate, thumb );
                 newsItems.add(newsItem);
             }
 

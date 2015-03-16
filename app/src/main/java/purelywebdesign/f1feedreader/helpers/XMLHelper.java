@@ -18,7 +18,7 @@ public class XMLHelper {
     /**
      * Retries data from a XML feed, converting it to JSON object
      * @param  query_url: The REST url to call for data
-     * @param  type: The source the query is aimed at (1:BBC, 2:Telegraph)
+     * @param  type: The source the query is aimed at (1:BBC, 2:Telegraph, 3:Sky)
      * @return jsonObject: The retrieved data
      */
     public static void submitQuery(String query_url, final int type){
@@ -30,6 +30,7 @@ public class XMLHelper {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody){
 
                 String s = new String(responseBody);
+                //Log.d("JSON object", s.toString());
                 JSONObject results = null;
                 try{
                     results = XML.toJSONObject(s);
@@ -39,6 +40,12 @@ public class XMLHelper {
                             break;
                         case 2:
                             JSONHelper.prepareTelegraphJSON(results);
+                            break;
+                        case 3:
+                            JSONHelper.prepareCrashJSON(results);
+                            break;
+                        case 4:
+                            JSONHelper.prepareGuardianJSON(results);
                             break;
                     }
 

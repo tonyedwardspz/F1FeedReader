@@ -18,7 +18,8 @@ public class NewsFeed extends Fragment implements AdapterView.OnItemClickListene
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static final String BBC_QUERY_URL = "http://feeds.bbci.co.uk/sport/0/formula1/rss.xml";
-    private static final String GUARDIAN_QUERY_URL = "http://www.theguardian.com/sport/formulaone/rss";
+    private static final String CRASH_QUERY_URL = "http://rss.feedsportal.com/c/350/f/537798/index.rss";
+    private static final String TELEGRAPH_QUERY_URL = "http://www.telegraph.co.uk/sport/motorsport/formulaone/rss";
     public static NewItemAdapter newsAdapter = null;
     public static ListView newsList;
 
@@ -45,7 +46,8 @@ public class NewsFeed extends Fragment implements AdapterView.OnItemClickListene
         newsList = (ListView) rootView.findViewById(R.id.news_listview);
         newsList.setAdapter(newsAdapter);
         XMLHelper.submitQuery(BBC_QUERY_URL, 1);
-        XMLHelper.submitQuery("http://www.telegraph.co.uk/sport/motorsport/formulaone/rss", 2);
+        XMLHelper.submitQuery(TELEGRAPH_QUERY_URL, 2);
+        XMLHelper.submitQuery(CRASH_QUERY_URL, 3);
 
         return rootView;
     }

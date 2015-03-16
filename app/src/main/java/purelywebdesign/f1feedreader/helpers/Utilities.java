@@ -55,5 +55,4 @@ public class Utilities {
         String[] splitDescription = description.split("<");
         return splitDescription[0] + ".";
     }
-
 }

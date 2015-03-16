@@ -20,6 +20,9 @@ public class NewsItem {
         this.thumbnailURL = thumbnailUrl;
     }
 
+    /**
+     * Overload constructor for items without a thumbnail
+     */
     public NewsItem(String title, String description, String url, String pubDate) {
         this.title = title;
         this.description = description;
