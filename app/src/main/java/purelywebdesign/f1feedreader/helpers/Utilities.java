@@ -11,6 +11,7 @@ public class Utilities {
 
 
     private static final DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    private static final DateFormat newsSdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
 
     /**
      * Compares the next race date to the current date. Formats the date
@@ -43,6 +44,38 @@ public class Utilities {
             e.printStackTrace();
         }
         return parsedDate;
+    }
+
+    /**
+     * Parses a given date string to EEE, dd MMM yyyy HH:mm:ss z.
+     * @param  dateToParse: The date of a news item
+     * @return Date: Date formateted to the DateFormat in newsSdf
+     */
+    public static Date parseLongDate(String dateToParse){
+        Date parsedDate = null;
+
+        try {
+            parsedDate = (Date) newsSdf.parse(dateToParse);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return parsedDate;
+    }
+
+    /**
+     * Parses a given date string to EEE, dd MMM yyyy HH:mm:ss z.
+     * @param  toParse: Date from an newsItem object
+     * @return Date: Date formatted to the DateFormat in sdf
+     */
+    public static String dateToString (Date toParse){
+        String parsedDateString = null;
+
+        try {
+            parsedDateString = sdf.format(toParse);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return parsedDateString;
     }
 
     /**

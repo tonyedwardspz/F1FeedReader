@@ -1,14 +1,18 @@
 package purelywebdesign.f1feedreader.entities;
 
+import java.util.Date;
+
+import purelywebdesign.f1feedreader.helpers.Utilities;
+
 /**
  * Created by Anthony on 13/03/2015.
  */
-public class NewsItem {
+public class NewsItem implements Comparable<NewsItem>{
 
     private String title;
     private String description;
     private String url;
-    private String pubDate;
+    private Date pubDate;
     private String thumbnailURL;
 
     public NewsItem(String title, String description, String url, String pubDate,
@@ -16,7 +20,7 @@ public class NewsItem {
         this.title = title;
         this.description = description;
         this.url = url;
-        this.pubDate = pubDate;
+        this.pubDate = Utilities.parseLongDate(pubDate);
         this.thumbnailURL = thumbnailUrl;
     }
 
@@ -27,7 +31,7 @@ public class NewsItem {
         this.title = title;
         this.description = description;
         this.url = url;
-        this.pubDate = pubDate;
+        this.pubDate = Utilities.parseLongDate(pubDate);
         this.thumbnailURL = null;
     }
 
@@ -43,7 +47,7 @@ public class NewsItem {
         return url;
     }
 
-    public String getPubDate() {
+    public Date getPubDate() {
         return pubDate;
     }
 
@@ -52,4 +56,8 @@ public class NewsItem {
     }
 
 
+    @Override
+    public int compareTo(NewsItem another) {
+        return getPubDate().compareTo(another.getPubDate());
+    }
 }

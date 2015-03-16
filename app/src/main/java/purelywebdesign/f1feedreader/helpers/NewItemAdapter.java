@@ -1,6 +1,7 @@
 package purelywebdesign.f1feedreader.helpers;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import purelywebdesign.f1feedreader.R;
 import purelywebdesign.f1feedreader.entities.NewsItem;
@@ -61,8 +63,9 @@ public class NewItemAdapter extends BaseAdapter {
             // create a new holder with the subviews
             holder = new ViewHolder();
             holder.newsTitle = (TextView) convertView.findViewById(R.id.newsTitle);
-            holder.newsSource = (TextView) convertView.findViewById(R.id.newsSource);
+            holder.newsDescription = (TextView) convertView.findViewById(R.id.newsSource);
             holder.image = (ImageView) convertView.findViewById(R.id.img_thumbnail);
+            holder.date = (TextView) convertView.findViewById(R.id.publicationDate);
 
             // hold onto it for future recycling
             convertView.setTag(holder);
@@ -75,8 +78,9 @@ public class NewItemAdapter extends BaseAdapter {
         NewsItem thisItem = getItem(position);
 
         holder.newsTitle.setText(thisItem.getTitle());
-        holder.newsSource.setText(thisItem.getDescription());
+        holder.newsDescription.setText(thisItem.getDescription());
         Picasso.with(mContext).load(thisItem.getThumbnailURL()).into(holder.image);
+        holder.date.setText(thisItem.getPubDate().toString());
 
 
         return convertView;
@@ -84,13 +88,21 @@ public class NewItemAdapter extends BaseAdapter {
 
     public void updateData(ArrayList<NewsItem> items){
         mItems.addAll(items);
+        //ArrayList sortedItems = new ArrayList();
+        Collections.sort(mItems, Collections.reverseOrder());
+
+        for (NewsItem i: mItems){
+            Log.d("date ", i.getPubDate() + " : " + i.getUrl());
+        }
+
         notifyDataSetChanged();
     }
 
     private static class ViewHolder {
         public TextView newsTitle;
-        public TextView newsSource;
+        public TextView newsDescription;
         public ImageView image;
+        public TextView date;
     }
 
 

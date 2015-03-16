@@ -36,4 +36,10 @@
         android:layout_toRightOf="@id/img_thumbnail"
         android:layout_below="@id/newsTitle"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/publicationDate"
+        android:layout_below="@id/newsSource"/>
+
 </RelativeLayout>

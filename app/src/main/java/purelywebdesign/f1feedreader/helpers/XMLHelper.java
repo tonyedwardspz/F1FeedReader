@@ -44,9 +44,6 @@ public class XMLHelper {
                         case 3:
                             JSONHelper.prepareCrashJSON(results);
                             break;
-                        case 4:
-                            JSONHelper.prepareGuardianJSON(results);
-                            break;
                     }
 
                 } catch (JSONException e) {
