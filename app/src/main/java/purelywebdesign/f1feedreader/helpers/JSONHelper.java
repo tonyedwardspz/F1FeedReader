@@ -14,7 +14,7 @@ import purelywebdesign.f1feedreader.ConstructorStandings;
 import purelywebdesign.f1feedreader.DriverStandings;
 import purelywebdesign.f1feedreader.NewsFeed;
 import purelywebdesign.f1feedreader.NextRace;
-import purelywebdesign.f1feedreader.entities.BBCItem;
+import purelywebdesign.f1feedreader.entities.NewsItem;
 
 /**
  * Created by Anthony on 22/02/2015.
@@ -64,7 +64,7 @@ public class JSONHelper {
     */
     public static void prepareBBCJSON (JSONObject jsonObject){
         Log.d("NEWS JSON REPLY", jsonObject.toString());
-        ArrayList<BBCItem> bbcItems = new ArrayList();
+        ArrayList<NewsItem> newsItems = new ArrayList();
 
         try {
             JSONObject js1 = jsonObject.getJSONObject("rss");
@@ -79,11 +79,11 @@ public class JSONHelper {
                 String pubDate = thisItem .optString("pubDate");
                 String thumb = thisItem .getJSONArray("media:thumbnail").getJSONObject(1).optString("url");
 
-                BBCItem newsItem = new BBCItem( title, description, link, pubDate, thumb );
-                bbcItems.add(newsItem);
+                NewsItem newsItem = new NewsItem( title, description, link, pubDate, thumb );
+                newsItems.add(newsItem);
             }
 
-            NewsFeed.newsAdapter.updateData(bbcItems);
+            NewsFeed.newsAdapter.updateData(newsItems);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,7 +95,7 @@ public class JSONHelper {
      */
     public static void prepareTelegraphJSON (JSONObject jsonObject){
         Log.d("NEWS JSON REPLY", jsonObject.toString());
-        ArrayList<BBCItem> bbcItems = new ArrayList();
+        ArrayList<NewsItem> newsItems = new ArrayList();
 
         try {
             JSONObject js1 = jsonObject.getJSONObject("rss");
@@ -111,13 +111,12 @@ public class JSONHelper {
 
                 String link = thisItem .optString("link");
                 String pubDate = thisItem .optString("pubDate");
-                String thumb = null;
 
-                BBCItem newsItem = new BBCItem( title, description, link, pubDate, thumb );
-                bbcItems.add(newsItem);
+                NewsItem newsItem = new NewsItem( title, description, link, pubDate);
+                newsItems.add(newsItem);
             }
 
-            NewsFeed.newsAdapter.updateData(bbcItems);
+            NewsFeed.newsAdapter.updateData(newsItems);
         } catch (Exception e) {
             e.printStackTrace();
         }

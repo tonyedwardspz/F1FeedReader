@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import purelywebdesign.f1feedreader.R;
-import purelywebdesign.f1feedreader.entities.BBCItem;
+import purelywebdesign.f1feedreader.entities.NewsItem;
 
 /**
  * Created by Anthony on 14/03/2015.
@@ -22,7 +22,7 @@ public class NewItemAdapter extends BaseAdapter {
 
     Context mContext;
     LayoutInflater mInflater;
-    ArrayList<BBCItem> mItems;
+    ArrayList<NewsItem> mItems;
 
     public NewItemAdapter(Context context, LayoutInflater inflater){
         mContext = context;
@@ -41,7 +41,7 @@ public class NewItemAdapter extends BaseAdapter {
     }
 
     @Override
-    public BBCItem getItem(int position) {
+    public NewsItem getItem(int position) {
         return mItems.get(position);
     }
 
@@ -72,17 +72,17 @@ public class NewItemAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        BBCItem thisItem = getItem(position);
+        NewsItem thisItem = getItem(position);
 
         holder.newsTitle.setText(thisItem.getTitle());
-        holder.newsSource.setText(thisItem.description);
+        holder.newsSource.setText(thisItem.getDescription());
         Picasso.with(mContext).load(thisItem.getThumbnailURL()).into(holder.image);
-        //holder.driverPoints.setText(driverPoints);
+
 
         return convertView;
     }
 
-    public void updateData(ArrayList<BBCItem> items){
+    public void updateData(ArrayList<NewsItem> items){
         mItems.addAll(items);
         notifyDataSetChanged();
     }

@@ -3,19 +3,12 @@ package purelywebdesign.f1feedreader;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
-import purelywebdesign.f1feedreader.entities.BBCItem;
 import purelywebdesign.f1feedreader.helpers.NewItemAdapter;
 import purelywebdesign.f1feedreader.helpers.XMLHelper;
 

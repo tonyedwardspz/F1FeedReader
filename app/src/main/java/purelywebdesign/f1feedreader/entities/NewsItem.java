@@ -3,21 +3,29 @@ package purelywebdesign.f1feedreader.entities;
 /**
  * Created by Anthony on 13/03/2015.
  */
-public class BBCItem {
+public class NewsItem {
 
-    public final String title;
-    public final String description;
-    public final String url;
-    public final String pubDate;
-    public final String thumbnailURL;
+    private String title;
+    private String description;
+    private String url;
+    private String pubDate;
+    private String thumbnailURL;
 
-    public BBCItem(String title, String description, String url, String pubDate,
-                   String thumbnailUrl) {
+    public NewsItem(String title, String description, String url, String pubDate,
+                    String thumbnailUrl) {
         this.title = title;
         this.description = description;
         this.url = url;
         this.pubDate = pubDate;
         this.thumbnailURL = thumbnailUrl;
+    }
+
+    public NewsItem(String title, String description, String url, String pubDate) {
+        this.title = title;
+        this.description = description;
+        this.url = url;
+        this.pubDate = pubDate;
+        this.thumbnailURL = null;
     }
 
     public String getTitle() {
@@ -39,4 +47,6 @@ public class BBCItem {
     public String getThumbnailURL() {
         return thumbnailURL;
     }
+
+
 }
