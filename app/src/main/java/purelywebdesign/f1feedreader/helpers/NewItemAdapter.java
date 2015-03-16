@@ -83,7 +83,7 @@ public class NewItemAdapter extends BaseAdapter {
     }
 
     public void updateData(ArrayList<BBCItem> items){
-        mItems = items;
+        mItems.addAll(items);
         notifyDataSetChanged();
     }
 

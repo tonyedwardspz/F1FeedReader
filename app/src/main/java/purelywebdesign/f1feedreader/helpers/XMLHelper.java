@@ -20,9 +20,10 @@ public class XMLHelper {
     /**
      * Retries data from a XML feed, converting it to JSON object
      * @param  query_url: The REST url to call for data
+     * @param  type: The source the query is aimed at (1:BBC, 2:Telegraph)
      * @return jsonObject: The retrieved data
      */
-    public static void submitQuery(String query_url){
+    public static void submitQuery(String query_url, final int type){
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(query_url, new AsyncHttpResponseHandler(){
@@ -34,7 +35,15 @@ public class XMLHelper {
                 JSONObject results = null;
                 try{
                     results = XML.toJSONObject(s);
-                    NewsFeed.prepareJSON(results);
+                    switch (type) {
+                        case 1:
+                            NewsFeed.prepareBBCJSON(results);
+                            break;
+                        case 2:
+                            NewsFeed.prepareTelegraphJSON(results);
+                            break;
+                    }
+
                 } catch (JSONException e) {
                     Log.e("JSON exception", e.getMessage());
                     e.printStackTrace();
