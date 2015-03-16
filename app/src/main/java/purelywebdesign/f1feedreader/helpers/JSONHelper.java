@@ -14,6 +14,7 @@ import purelywebdesign.f1feedreader.ConstructorStandings;
 import purelywebdesign.f1feedreader.DriverStandings;
 import purelywebdesign.f1feedreader.NewsFeed;
 import purelywebdesign.f1feedreader.NextRace;
+import purelywebdesign.f1feedreader.entities.ConstructorStanding;
 import purelywebdesign.f1feedreader.entities.NewsItem;
 
 /**
@@ -40,7 +41,7 @@ public class JSONHelper {
                         DriverStandings.prepareDriverJSON(jsonObject);
                         break;
                     case 2:
-                        ConstructorStandings.prepareConstructorJSON(jsonObject);
+                        prepareConstructorJSON(jsonObject);
                         break;
                     case 3:
                         NextRace.prepareNextRaceJson(jsonObject);
@@ -147,5 +148,36 @@ public class JSONHelper {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void prepareConstructorJSON(JSONObject jsonObject){
+        Log.d("JSON REPLY: ", jsonObject.toString());
+        ArrayList<ConstructorStanding> cons = new ArrayList();
+        String pos;
+        String name;
+        String points;
+
+        try {
+            JSONObject js1 = jsonObject.getJSONObject("MRData");
+            JSONObject js2 = js1.getJSONObject("StandingsTable");
+            JSONArray js3 = js2.getJSONArray("StandingsLists");
+            JSONArray js4 = js3.getJSONObject(0).getJSONArray("ConstructorStandings");
+
+            for (int i = 0; i < js4.length(); i++) {
+                JSONObject thisCon = js4.getJSONObject(i);
+
+                pos = thisCon.optString("position");
+                name = thisCon.getJSONObject("Constructor").optString("name");
+                points = thisCon.optString("points");
+
+                ConstructorStanding cs = new ConstructorStanding(pos, name, points);
+                cons.add(cs);
+            }
+            ConstructorStandings.constructorJSONAdapterDriver.updateData(cons);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 }

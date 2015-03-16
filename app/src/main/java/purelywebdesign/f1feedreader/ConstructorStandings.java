@@ -3,15 +3,11 @@ package purelywebdesign.f1feedreader;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import purelywebdesign.f1feedreader.helpers.ConstructorJSONAdapter;
 import purelywebdesign.f1feedreader.helpers.JSONHelper;
@@ -67,18 +63,5 @@ public class ConstructorStandings extends Fragment implements AdapterView.OnItem
 
     }
 
-    public static void prepareConstructorJSON(JSONObject jsonObject){
-        Log.d("JSON REPLY: ", jsonObject.toString());
 
-        try {
-            JSONObject js1 = jsonObject.getJSONObject("MRData");
-            JSONObject js2 = js1.getJSONObject("StandingsTable");
-            JSONArray js3 = js2.getJSONArray("StandingsLists");
-            JSONObject js4 = js3.getJSONObject(0);
-
-            constructorJSONAdapterDriver.updateData(js4.getJSONArray("ConstructorStandings"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
