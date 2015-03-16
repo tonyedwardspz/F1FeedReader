@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import purelywebdesign.f1feedreader.helpers.ConstructorJSONAdapter;
+import purelywebdesign.f1feedreader.adapters.ConstructorJSONAdapter;
 import purelywebdesign.f1feedreader.helpers.JSONHelper;
 
 

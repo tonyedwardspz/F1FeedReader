@@ -1,4 +1,5 @@
-package purelywebdesign.f1feedreader.helpers;
+
+package purelywebdesign.f1feedreader.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,16 +11,19 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import purelywebdesign.f1feedreader.NextRace;
+import purelywebdesign.f1feedreader.R;
+
 /**
- * Created by Anthony on 13/03/2015.
+ * Created by Anthony on 22/02/2015.
  */
-public class JSONAdapter extends BaseAdapter{
+public class NextRaceAdapter extends BaseAdapter {
 
     Context mContext;
     LayoutInflater mInflater;
     JSONArray mJsonArray;
 
-    public JSONAdapter(Context context, LayoutInflater inflater){
+    public NextRaceAdapter(Context context, LayoutInflater inflater){
         mContext = context;
         mInflater = inflater;
         mJsonArray = new JSONArray();
@@ -47,7 +51,17 @@ public class JSONAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+
+        NextRace.nextRaceTitle = (TextView) convertView.findViewById(R.id.next_race_title);
+
+        JSONObject jsonObject = getItem(position);
+
+        String constructorPos = "Next Race";
+        if (jsonObject.has("raceName")){
+            constructorPos = jsonObject.optString("raceName");
+        }
+
+        NextRace.nextRaceTitle.setText(constructorPos);
 
         return convertView;
     }
@@ -56,12 +70,5 @@ public class JSONAdapter extends BaseAdapter{
         mJsonArray = jsonArray;
         notifyDataSetChanged();
     }
-
-    private static class ViewHolder {
-        public TextView driverPosition;
-        public TextView driverName;
-        public TextView driverPoints;
-    }
-
-
 }
+

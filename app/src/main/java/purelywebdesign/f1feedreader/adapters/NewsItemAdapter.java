@@ -1,4 +1,4 @@
-package purelywebdesign.f1feedreader.helpers;
+package purelywebdesign.f1feedreader.adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -20,13 +20,13 @@ import purelywebdesign.f1feedreader.entities.NewsItem;
 /**
  * Created by Anthony on 14/03/2015.
  */
-public class NewItemAdapter extends BaseAdapter {
+public class NewsItemAdapter extends BaseAdapter {
 
     Context mContext;
     LayoutInflater mInflater;
     ArrayList<NewsItem> mItems;
 
-    public NewItemAdapter(Context context, LayoutInflater inflater){
+    public NewsItemAdapter(Context context, LayoutInflater inflater){
         mContext = context;
         mInflater = inflater;
         mItems = new ArrayList<>();

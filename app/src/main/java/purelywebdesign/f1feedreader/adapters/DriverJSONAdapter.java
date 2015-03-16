@@ -1,4 +1,4 @@
-package purelywebdesign.f1feedreader.helpers;
+package purelywebdesign.f1feedreader.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,20 +9,21 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import purelywebdesign.f1feedreader.Holders.StandingsHolder;
+import purelywebdesign.f1feedreader.holders.StandingsHolder;
 import purelywebdesign.f1feedreader.R;
-import purelywebdesign.f1feedreader.entities.ConstructorStanding;
+import purelywebdesign.f1feedreader.entities.DriverStanding;
 
 /**
  * Created by Anthony on 22/02/2015.
  */
-public class ConstructorJSONAdapter extends BaseAdapter {
+public class DriverJSONAdapter extends BaseAdapter {
 
     Context mContext;
     LayoutInflater mInflater;
-    ArrayList<ConstructorStanding> mItems;
+    ArrayList<DriverStanding> mItems;
 
-    public ConstructorJSONAdapter(Context context, LayoutInflater inflater){
+    public DriverJSONAdapter(Context context, LayoutInflater inflater){
+
         mContext = context;
         mInflater = inflater;
         mItems = new ArrayList<>();
@@ -34,7 +35,7 @@ public class ConstructorJSONAdapter extends BaseAdapter {
     }
 
     @Override
-    public ConstructorStanding getItem(int position) {
+    public DriverStanding getItem(int position) {
         return mItems.get(position);
     }
 
@@ -59,21 +60,22 @@ public class ConstructorJSONAdapter extends BaseAdapter {
 
             // hold onto it for future recycling
             convertView.setTag(holder);
+
         } else {
             // return the existing view
             holder = (StandingsHolder) convertView.getTag();
         }
 
-        ConstructorStanding thisCon = getItem(position);
+        DriverStanding thisDriver = getItem(position);
 
-        holder.getPosition().setText(thisCon.getPosition());
-        holder.getName().setText(thisCon.getName());
-        holder.getPoints().setText(thisCon.getPoints());
+        holder.getPosition().setText(thisDriver.getPosition());
+        holder.getName().setText(thisDriver.getName());
+        holder.getPoints().setText(thisDriver.getPoints());
 
         return convertView;
     }
 
-    public void updateData(ArrayList<ConstructorStanding> items){
+    public void updateData(ArrayList<DriverStanding> items){
         mItems.addAll(items);
         notifyDataSetChanged();
     }

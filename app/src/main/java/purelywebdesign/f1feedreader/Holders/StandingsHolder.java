@@ -1,4 +1,4 @@
-package purelywebdesign.f1feedreader.Holders;
+package purelywebdesign.f1feedreader.holders;
 
 import android.widget.TextView;
 

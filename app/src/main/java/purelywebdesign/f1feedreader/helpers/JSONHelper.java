@@ -15,6 +15,7 @@ import purelywebdesign.f1feedreader.DriverStandings;
 import purelywebdesign.f1feedreader.NewsFeed;
 import purelywebdesign.f1feedreader.NextRace;
 import purelywebdesign.f1feedreader.entities.ConstructorStanding;
+import purelywebdesign.f1feedreader.entities.DriverStanding;
 import purelywebdesign.f1feedreader.entities.NewsItem;
 
 /**
@@ -38,7 +39,7 @@ public class JSONHelper {
             public void onSuccess(JSONObject jsonObject){
                 switch (reqType){
                     case 1:
-                        DriverStandings.prepareDriverJSON(jsonObject);
+                        prepareDriverJSON(jsonObject);
                         break;
                     case 2:
                         prepareConstructorJSON(jsonObject);
@@ -63,21 +64,26 @@ public class JSONHelper {
     */
     public static void prepareBBCJSON (JSONObject jsonObject){
         ArrayList<NewsItem> newsItems = new ArrayList();
+        JSONObject thisItem;
+        NewsItem newsItem;
+        String title;
+        String description;
+        String link;
+        String pubDate;
+        String thumb;
 
         try {
-            JSONObject js1 = jsonObject.getJSONObject("rss");
-            JSONObject js2 = js1.getJSONObject("channel");
-            JSONArray items = js2.getJSONArray("item");
+            JSONArray items = getNewsItems(jsonObject);
 
             for (int i = 0; i < 10; i++){
-                JSONObject thisItem = items.getJSONObject(i);
-                String title = thisItem .optString("title");
-                String description = thisItem .optString("description");
-                String link = thisItem .optString("link");
-                String pubDate = thisItem .optString("pubDate");
-                String thumb = thisItem .getJSONArray("media:thumbnail").getJSONObject(1).optString("url");
+                thisItem = items.getJSONObject(i);
+                title = thisItem .optString("title");
+                description = thisItem .optString("description");
+                link = thisItem .optString("link");
+                pubDate = thisItem .optString("pubDate");
+                thumb = thisItem .getJSONArray("media:thumbnail").getJSONObject(1).optString("url");
 
-                NewsItem newsItem = new NewsItem( title, description, link, pubDate, thumb );
+                newsItem = new NewsItem( title, description, link, pubDate, thumb );
                 newsItems.add(newsItem);
             }
 
@@ -93,23 +99,24 @@ public class JSONHelper {
      */
     public static void prepareTelegraphJSON (JSONObject jsonObject){
         ArrayList<NewsItem> newsItems = new ArrayList();
+        NewsItem newsItem;
+        JSONObject thisItem;
+        String title;
+        String description;
+        String link;
+        String pubDate;
 
         try {
-            JSONObject js1 = jsonObject.getJSONObject("rss");
-            JSONObject js2 = js1.getJSONObject("channel");
-            JSONArray items = js2.getJSONArray("item");
+            JSONArray items = getNewsItems(jsonObject);
 
             for (int i = 0; i < 10; i++){
-                JSONObject thisItem = items.getJSONObject(i);
-                String title = thisItem .optString("title");
+                thisItem = items.getJSONObject(i);
+                title = thisItem .optString("title");
+                description = Utilities.prepareTelegraphDescription(thisItem .optString("description"));
+                link = thisItem .optString("link");
+                pubDate = thisItem .optString("pubDate");
 
-                String description = thisItem .optString("description");
-                description = Utilities.prepareTelegraphDescription(description);
-
-                String link = thisItem .optString("link");
-                String pubDate = thisItem .optString("pubDate");
-
-                NewsItem newsItem = new NewsItem( title, description, link, pubDate );
+                newsItem = new NewsItem( title, description, link, pubDate );
                 newsItems.add(newsItem);
             }
 
@@ -125,46 +132,66 @@ public class JSONHelper {
      */
     public static void prepareCrashJSON (JSONObject jsonObject){
         ArrayList<NewsItem> newsItems = new ArrayList();
+        JSONObject thisItem;
+        NewsItem newsItem;
+        String title;
+        String description;
+        String link;
+        String pubDate;
+        String thumb;
 
         try {
-            JSONObject js1 = jsonObject.getJSONObject("rss");
-            JSONObject js2 = js1.getJSONObject("channel");
-            JSONArray items = js2.getJSONArray("item");
+            JSONArray items = getNewsItems(jsonObject);
 
             for (int i = 0; i < 10; i++){
-                JSONObject thisItem = items.getJSONObject(i);
-                String title = thisItem .optString("title");
-                String description = thisItem .optString("description");
-                description = Utilities.prepareTelegraphDescription(description);
-                String link = thisItem .optString("link");
-                String pubDate = thisItem .optString("pubDate");
-                String thumb = thisItem .getJSONObject("media:thumbnail").optString("url");
+                thisItem = items.getJSONObject(i);
 
-                NewsItem newsItem = new NewsItem( title, description, link, pubDate, thumb );
+                title = thisItem .optString("title");
+                description = thisItem .optString("description");
+                description = Utilities.prepareTelegraphDescription(description);
+                link = thisItem .optString("link");
+                pubDate = thisItem .optString("pubDate");
+                thumb = thisItem .getJSONObject("media:thumbnail").optString("url");
+
+                newsItem = new NewsItem( title, description, link, pubDate, thumb );
                 newsItems.add(newsItem);
             }
-
             NewsFeed.newsAdapter.updateData(newsItems);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Extracts and returns array of news items from provided JSONObject
+     */
+    public static JSONArray getNewsItems(JSONObject newsObject){
+        JSONArray items = new JSONArray();
+        try {
+            items = newsObject.getJSONObject("rss").getJSONObject("channel").getJSONArray("item");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return items;
+    }
+
+    /**
+     * Takes the ergast.com constructor standings JSON reply and creates a set of objects
+     * Sends the array of objects to the adapter for displaying.
+     */
     public static void prepareConstructorJSON(JSONObject jsonObject){
-        Log.d("JSON REPLY: ", jsonObject.toString());
         ArrayList<ConstructorStanding> cons = new ArrayList();
         String pos;
         String name;
         String points;
 
         try {
-            JSONObject js1 = jsonObject.getJSONObject("MRData");
-            JSONObject js2 = js1.getJSONObject("StandingsTable");
-            JSONArray js3 = js2.getJSONArray("StandingsLists");
-            JSONArray js4 = js3.getJSONObject(0).getJSONArray("ConstructorStandings");
+            JSONObject js1 = jsonObject.getJSONObject("MRData").getJSONObject("StandingsTable");
+            JSONArray js2 = js1.getJSONArray("StandingsLists").getJSONObject(0).
+                                getJSONArray("ConstructorStandings");
 
-            for (int i = 0; i < js4.length(); i++) {
-                JSONObject thisCon = js4.getJSONObject(i);
+            for (int i = 0; i < js2.length(); i++) {
+                JSONObject thisCon = js2.getJSONObject(i);
 
                 pos = thisCon.optString("position");
                 name = thisCon.getJSONObject("Constructor").optString("name");
@@ -177,7 +204,37 @@ public class JSONHelper {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    /**
+     * Takes the ergast.com driver standings JSON reply and creates a set of objects
+     * Sends the array of objects to the adapter for displaying.
+     */
+    public static void prepareDriverJSON(JSONObject jsonObject){
+        ArrayList<DriverStanding> drivers = new ArrayList<>();
+        String pos;
+        String name;
+        String points;
 
+        try {
+            JSONObject js1 = jsonObject.getJSONObject("MRData").getJSONObject("StandingsTable");
+            JSONArray js2 = js1.getJSONArray("StandingsLists").getJSONObject(0).
+                            getJSONArray("DriverStandings");
+
+            for (int i = 0; i < js2.length(); i++){
+                JSONObject thisDriver = js2.getJSONObject(i);
+
+                pos = thisDriver.optString("position");
+                points = thisDriver.optString("points");
+                JSONObject jsDriver = thisDriver.getJSONObject("Driver");
+                name = jsDriver.optString("givenName") + " " + jsDriver.optString("familyName");
+
+                DriverStanding drv = new DriverStanding(pos, name, points);
+                drivers.add(drv);
+            }
+            DriverStandings.driverJSONAdapterDriver.updateData(drivers);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

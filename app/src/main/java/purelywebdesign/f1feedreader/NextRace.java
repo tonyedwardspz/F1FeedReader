@@ -13,7 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import purelywebdesign.f1feedreader.helpers.JSONHelper;
-import purelywebdesign.f1feedreader.helpers.NextRaceJSONAdapter;
+import purelywebdesign.f1feedreader.adapters.NextRaceAdapter;
 import purelywebdesign.f1feedreader.helpers.Utilities;
 
 
@@ -22,7 +22,7 @@ public class NextRace extends Fragment implements AdapterView.OnItemClickListene
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static final String QUERY_URL = "http://ergast.com/api/f1/2015.json";
-    public static NextRaceJSONAdapter NextRaceJSONAdapterDriver = null;
+    public static NextRaceAdapter NextRaceJSONAdapterDriver = null;
 
     public static TextView nextRaceRound;
     public static TextView nextRaceTitle;
@@ -47,7 +47,7 @@ public class NextRace extends Fragment implements AdapterView.OnItemClickListene
         View rootView = inflater.inflate(R.layout.fragment_next_race, container, false);
 
         // set up the list view adapter and get the data
-        NextRaceJSONAdapterDriver = new NextRaceJSONAdapter(getActivity(), inflater);
+        NextRaceJSONAdapterDriver = new NextRaceAdapter(getActivity(), inflater);
 
         nextRaceTitle = (TextView) rootView.findViewById(R.id.next_race_title);
         nextRaceRound = (TextView) rootView.findViewById(R.id.next_race_round);

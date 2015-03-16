@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import purelywebdesign.f1feedreader.helpers.NewItemAdapter;
+import purelywebdesign.f1feedreader.adapters.NewsItemAdapter;
 import purelywebdesign.f1feedreader.helpers.XMLHelper;
 
 
@@ -20,7 +20,7 @@ public class NewsFeed extends Fragment implements AdapterView.OnItemClickListene
     private static final String BBC_QUERY_URL = "http://feeds.bbci.co.uk/sport/0/formula1/rss.xml";
     private static final String CRASH_QUERY_URL = "http://rss.feedsportal.com/c/350/f/537798/index.rss";
     private static final String TELEGRAPH_QUERY_URL = "http://www.telegraph.co.uk/sport/motorsport/formulaone/rss";
-    public static NewItemAdapter newsAdapter = null;
+    public static NewsItemAdapter newsAdapter = null;
     public static ListView newsList;
 
 
@@ -42,7 +42,7 @@ public class NewsFeed extends Fragment implements AdapterView.OnItemClickListene
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_news_feed, container, false);
 
-        newsAdapter = new NewItemAdapter(getActivity(), inflater);
+        newsAdapter = new NewsItemAdapter(getActivity(), inflater);
         newsList = (ListView) rootView.findViewById(R.id.news_listview);
         newsList.setAdapter(newsAdapter);
         XMLHelper.submitQuery(BBC_QUERY_URL, 1);

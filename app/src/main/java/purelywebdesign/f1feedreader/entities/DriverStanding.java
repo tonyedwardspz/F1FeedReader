@@ -3,9 +3,9 @@ package purelywebdesign.f1feedreader.entities;
 /**
  * Created by Anthony on 16/03/2015.
  */
-public class DriverStandings extends Standings {
+public class DriverStanding extends Standings {
 
-    public DriverStandings(String position, String name, String points) {
+    public DriverStanding(String position, String name, String points) {
         super(position, name, points);
     }
 
