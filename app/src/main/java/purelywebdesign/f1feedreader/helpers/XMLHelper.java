@@ -10,8 +10,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
 
-import purelywebdesign.f1feedreader.NewsFeed;
-
 /**
  * Created by Anthony on 13/03/2015.
  */
@@ -37,10 +35,10 @@ public class XMLHelper {
                     results = XML.toJSONObject(s);
                     switch (type) {
                         case 1:
-                            NewsFeed.prepareBBCJSON(results);
+                            JSONHelper.prepareBBCJSON(results);
                             break;
                         case 2:
-                            NewsFeed.prepareTelegraphJSON(results);
+                            JSONHelper.prepareTelegraphJSON(results);
                             break;
                     }
 

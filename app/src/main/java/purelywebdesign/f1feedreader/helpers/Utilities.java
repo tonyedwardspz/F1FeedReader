@@ -45,5 +45,15 @@ public class Utilities {
         return parsedDate;
     }
 
+    /**
+     * Prepares the description from the telegraph feed by removing
+     * unneeded html tags, and adding punctuation
+     * @param  description: String containing lots of html
+     * @return Date: Clean string
+     */
+    public static String prepareTelegraphDescription(String description){
+        String[] splitDescription = description.split("<");
+        return splitDescription[0] + ".";
+    }
 
 }
