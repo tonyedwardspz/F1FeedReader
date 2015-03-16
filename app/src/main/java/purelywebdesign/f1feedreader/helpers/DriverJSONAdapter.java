@@ -27,13 +27,13 @@ public class DriverJSONAdapter extends JSONAdapter{
 
         // check that the view does not exist
         if (convertView == null){
-            convertView = mInflater.inflate(R.layout.driver_standing_row, null);
+            convertView = mInflater.inflate(R.layout.standings_row, null);
 
             // create a new holder with the subviews
             holder = new ViewHolder();
-            holder.driverPosition = (TextView) convertView.findViewById(R.id.driver_position);
-            holder.driverName = (TextView) convertView.findViewById(R.id.driver_name);
-            holder.driverPoints = (TextView) convertView.findViewById(R.id.driver_points);
+            holder.driverPosition = (TextView) convertView.findViewById(R.id.standings_position);
+            holder.driverName = (TextView) convertView.findViewById(R.id.standings_name);
+            holder.driverPoints = (TextView) convertView.findViewById(R.id.standings_points);
 
             // hold onto it for future recycling
             convertView.setTag(holder);

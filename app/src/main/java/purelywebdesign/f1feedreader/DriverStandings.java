@@ -42,11 +42,11 @@ public class DriverStandings extends Fragment implements AdapterView.OnItemClick
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_driver_standing, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_standings, container, false);
 
         // set up the list view adapter and get the data
         driverJSONAdapterDriver = new DriverJSONAdapter(getActivity(), inflater);
-        driverListView = (ListView) rootView.findViewById(R.id.driver_listview);
+        driverListView = (ListView) rootView.findViewById(R.id.standings_listview);
         driverListView.setAdapter(driverJSONAdapterDriver);
         JSONHelper.submitQuery(QUERY_URL, 1);
 

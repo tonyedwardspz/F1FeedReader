@@ -30,13 +30,13 @@ public class ConstructorJSONAdapter extends JSONAdapter{
 
         // check that the view does not exist
         if (convertView == null){
-            convertView = super.mInflater.inflate(R.layout.constructor_standings_row, null);
+            convertView = super.mInflater.inflate(R.layout.standings_row, null);
 
             // create a new holder with the subviews
             holder = new ViewHolder();
-            holder.constructorPosition = (TextView) convertView.findViewById(R.id.constructor_position);
-            holder.constructorName = (TextView) convertView.findViewById(R.id.constructor_name);
-            holder.constructorPoints = (TextView) convertView.findViewById(R.id.constructor_points);
+            holder.constructorPosition = (TextView) convertView.findViewById(R.id.standings_position);
+            holder.constructorName = (TextView) convertView.findViewById(R.id.standings_name);
+            holder.constructorPoints = (TextView) convertView.findViewById(R.id.standings_points);
 
             // hold onto it for future recycling
             convertView.setTag(holder);

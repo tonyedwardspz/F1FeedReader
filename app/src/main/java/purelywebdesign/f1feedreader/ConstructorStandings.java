@@ -42,11 +42,11 @@ public class ConstructorStandings extends Fragment implements AdapterView.OnItem
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_constructor_standings, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_standings, container, false);
 
         // set up the list view adapter and get the data
         constructorJSONAdapterDriver = new ConstructorJSONAdapter(getActivity(), inflater);
-        constructorListView = (ListView) rootView.findViewById(R.id.constructor_listview);
+        constructorListView = (ListView) rootView.findViewById(R.id.standings_listview);
         constructorListView.setAdapter(constructorJSONAdapterDriver);
         JSONHelper.submitQuery(QUERY_URL, 2);
 

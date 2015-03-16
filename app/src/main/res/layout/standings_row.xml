@@ -16,7 +16,7 @@
         android:textSize="18sp"
         android:layout_alignParentLeft="true"
 
-        android:id="@+id/driver_position" />
+        android:id="@+id/standings_position" />
 
 
     <TextView
@@ -25,7 +25,7 @@
         android:textSize="18sp"
         android:layout_centerInParent="true"
         android:background="@color/primary_light"
-        android:id="@+id/driver_name" />
+        android:id="@+id/standings_name" />
 
 
     <TextView
@@ -34,7 +34,7 @@
         android:textSize="18sp"
         android:layout_alignParentRight="true"
 
-        android:id="@+id/driver_points" />
+        android:id="@+id/standings_points" />
 
 
 </RelativeLayout>
