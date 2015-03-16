@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import purelywebdesign.f1feedreader.Holders.StandingsHolder;
 import purelywebdesign.f1feedreader.R;
 import purelywebdesign.f1feedreader.entities.ConstructorStanding;
 
@@ -44,35 +45,30 @@ public class ConstructorJSONAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+        StandingsHolder holder;
 
         // check that the view does not exist
         if (convertView == null){
             convertView = mInflater.inflate(R.layout.standings_row, null);
 
             // create a new holder with the subviews
-            holder = new ViewHolder();
-            holder.constructorPosition = (TextView) convertView.findViewById(R.id.standings_position);
-            holder.constructorName = (TextView) convertView.findViewById(R.id.standings_name);
-            holder.constructorPoints = (TextView) convertView.findViewById(R.id.standings_points);
+            holder = new StandingsHolder();
+            holder.setPosition((TextView) convertView.findViewById(R.id.standings_position));
+            holder.setName((TextView) convertView.findViewById(R.id.standings_name));
+            holder.setPoints((TextView) convertView.findViewById(R.id.standings_points));
 
             // hold onto it for future recycling
             convertView.setTag(holder);
-
         } else {
             // return the existing view
-            holder = (ViewHolder) convertView.getTag();
+            holder = (StandingsHolder) convertView.getTag();
         }
 
         ConstructorStanding thisCon = getItem(position);
 
-        String constructorPos = thisCon.getPosition();
-        String constructorName = thisCon.getName();
-        String constructorPoints = thisCon.getPoints();
-
-        holder.constructorPosition.setText(constructorPos);
-        holder.constructorName.setText(constructorName);
-        holder.constructorPoints.setText(constructorPoints);
+        holder.getPosition().setText(thisCon.getPosition());
+        holder.getName().setText(thisCon.getName());
+        holder.getPoints().setText(thisCon.getPoints());
 
         return convertView;
     }
@@ -80,11 +76,5 @@ public class ConstructorJSONAdapter extends BaseAdapter {
     public void updateData(ArrayList<ConstructorStanding> items){
         mItems.addAll(items);
         notifyDataSetChanged();
-    }
-
-    private static class ViewHolder {
-        public TextView constructorPosition;
-        public TextView constructorName;
-        public TextView constructorPoints;
     }
 }
