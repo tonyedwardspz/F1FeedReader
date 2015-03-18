@@ -3,6 +3,7 @@ package purelywebdesign.f1feedreader;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,25 @@ public class NewsFeed extends Fragment implements AdapterView.OnItemClickListene
         newsAdapter = new NewsItemAdapter(getActivity(), inflater);
         newsList = (ListView) rootView.findViewById(R.id.news_listview);
         newsList.setAdapter(newsAdapter);
+
+        newsList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapt, View view, int position, long id) {
+
+                MyWebViewFragment webFragment = new MyWebViewFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("url", newsAdapter.getItem(position).getUrl());
+
+                FragmentManager fragmentManager = getFragmentManager();
+                webFragment.setArguments(bundle);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, webFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
         XMLHelper.submitQuery(BBC_QUERY_URL, 1);
         XMLHelper.submitQuery(TELEGRAPH_QUERY_URL, 2);
         XMLHelper.submitQuery(CRASH_QUERY_URL, 3);
@@ -63,7 +83,6 @@ public class NewsFeed extends Fragment implements AdapterView.OnItemClickListene
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
     }
 
 
