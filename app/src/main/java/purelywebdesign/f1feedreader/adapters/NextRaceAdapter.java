@@ -8,11 +8,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import java.util.ArrayList;
 
 import purelywebdesign.f1feedreader.NextRace;
 import purelywebdesign.f1feedreader.R;
+import purelywebdesign.f1feedreader.entities.Race;
 
 /**
  * Created by Anthony on 22/02/2015.
@@ -21,18 +21,18 @@ public class NextRaceAdapter extends BaseAdapter {
 
     Context mContext;
     LayoutInflater mInflater;
-    JSONArray mJsonArray;
+    ArrayList<Race> mItems;
 
     public NextRaceAdapter(Context context, LayoutInflater inflater){
         mContext = context;
         mInflater = inflater;
-        mJsonArray = new JSONArray();
+        mItems = new ArrayList<>();
     }
 
     @Override
     public int getCount() {
         try {
-            return mJsonArray.length();
+            return mItems.size();
         } catch (Exception e){
             e.printStackTrace();
             return 0;
@@ -40,8 +40,8 @@ public class NextRaceAdapter extends BaseAdapter {
     }
 
     @Override
-    public JSONObject getItem(int position) {
-        return mJsonArray.optJSONObject(position);
+    public Race getItem(int position) {
+        return mItems.get(position);
     }
 
     @Override
@@ -54,20 +54,20 @@ public class NextRaceAdapter extends BaseAdapter {
 
         NextRace.nextRaceTitle = (TextView) convertView.findViewById(R.id.next_race_title);
 
-        JSONObject jsonObject = getItem(position);
+        Race thisRace = getItem(position);
 
-        String constructorPos = "Next Race";
-        if (jsonObject.has("raceName")){
-            constructorPos = jsonObject.optString("raceName");
-        }
+//        String constructorPos = "Next Race";
+//        if (jsonObject.has("raceName")){
+//            constructorPos = jsonObject.optString("raceName");
+//        }
 
-        NextRace.nextRaceTitle.setText(constructorPos);
+        NextRace.nextRaceTitle.setText("next race");
 
         return convertView;
     }
 
-    public void updateData(JSONArray jsonArray){
-        mJsonArray = jsonArray;
+    public void updateData(ArrayList<Race> items){
+        mItems.addAll(items);
         notifyDataSetChanged();
     }
 }

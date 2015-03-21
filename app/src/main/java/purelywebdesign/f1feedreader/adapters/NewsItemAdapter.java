@@ -1,7 +1,6 @@
 package purelywebdesign.f1feedreader.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,13 +87,7 @@ public class NewsItemAdapter extends BaseAdapter {
 
     public void updateData(ArrayList<NewsItem> items){
         mItems.addAll(items);
-        //ArrayList sortedItems = new ArrayList();
         Collections.sort(mItems, Collections.reverseOrder());
-
-        for (NewsItem i: mItems){
-            Log.d("date ", i.getPubDate() + " : " + i.getUrl());
-        }
-
         notifyDataSetChanged();
     }
 

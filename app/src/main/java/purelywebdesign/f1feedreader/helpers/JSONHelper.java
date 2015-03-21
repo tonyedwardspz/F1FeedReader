@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import purelywebdesign.f1feedreader.ConstructorStandings;
 import purelywebdesign.f1feedreader.DriverStandings;
@@ -17,6 +18,7 @@ import purelywebdesign.f1feedreader.NextRace;
 import purelywebdesign.f1feedreader.entities.ConstructorStanding;
 import purelywebdesign.f1feedreader.entities.DriverStanding;
 import purelywebdesign.f1feedreader.entities.NewsItem;
+import purelywebdesign.f1feedreader.entities.Race;
 
 /**
  * Created by Anthony on 22/02/2015.
@@ -45,7 +47,7 @@ public class JSONHelper {
                         prepareConstructorJSON(jsonObject);
                         break;
                     case 3:
-                        NextRace.prepareNextRaceJson(jsonObject);
+                        prepareRaceJson(jsonObject);
                         break;
                 }
             }
@@ -233,6 +235,66 @@ public class JSONHelper {
                 drivers.add(drv);
             }
             DriverStandings.driverJSONAdapterDriver.updateData(drivers);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Cycles through the jsonObject looking for the next race, displaying results
+     * if a match is found.
+     * @param  jsonObject: Object containing the complete race data.
+     */
+    public static void prepareRaceJson(JSONObject jsonObject){
+        JSONObject thisRace;
+        JSONObject circuitObj;
+        ArrayList<Race> allRaces = new ArrayList<>();
+        int round;
+        String url;
+        String raceName;
+        String circuitName;
+        String latitude;
+        String longitude;
+        String locality;
+        String country;
+        Date raceDate;
+        Date raceTime;
+        String raceDateTime;
+        JSONArray races;
+
+        try {
+            races = jsonObject.getJSONObject("MRData").getJSONObject("RaceTable").getJSONArray("Races");
+
+            for (int i = 0; i < races.length() ; i++){
+                thisRace = races.getJSONObject(i);
+                circuitObj = thisRace.getJSONObject("Circuit");
+
+                round = Integer.parseInt(thisRace.optString("round"));
+                url = thisRace.optString("url");
+                raceName = thisRace.optString("raceName");
+                circuitName = circuitObj.getString("circuitName");
+                latitude = circuitObj.getJSONObject("Location").optString("lat");
+                longitude = circuitObj.getJSONObject("Location").optString("long");
+                locality = circuitObj.getJSONObject("Location").optString("locality");
+                country = circuitObj.getJSONObject("Location").optString("country");
+                raceDate = Utilities.parseJustDate(thisRace.optString("date"));
+                raceTime = Utilities.parseJustTime(thisRace.optString("time"));
+
+                raceDateTime = thisRace.optString("date");
+                raceDateTime += " ";
+                raceDateTime += thisRace.optString("time");
+                raceDateTime = raceDateTime.replace(raceDateTime.substring(raceDateTime.length()-1), "");
+
+                Log.d("RaceName ", raceName);
+                Log.d("RaceTime", raceDateTime);
+
+                Race raceObject = new Race(round, url, raceName, circuitName, latitude, longitude,
+                        locality, country, raceDate, raceTime, raceDateTime);
+                allRaces.add(raceObject);
+
+
+            }
+            NextRace.displayData(allRaces);
         } catch (Exception e) {
             e.printStackTrace();
         }

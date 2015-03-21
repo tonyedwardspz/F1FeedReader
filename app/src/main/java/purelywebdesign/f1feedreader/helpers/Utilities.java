@@ -12,6 +12,8 @@ public class Utilities {
 
     private static final DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     private static final DateFormat newsSdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
+    private static final DateFormat sdfJustDate = new SimpleDateFormat("yyyy-MM-dd");
+    private static final DateFormat sdfJustTime = new SimpleDateFormat("HH:mm:ss");
 
     /**
      * Compares the next race date to the current date. Formats the date
@@ -31,6 +33,39 @@ public class Utilities {
     }
 
     /**
+     * Parses a given date string to yyyy-MM-dd
+     * @param  dateToParse: The date of the next race in the JSON array
+     * @return Date: Date formateted to the DateFormat in sdfJustDate
+     */
+    public static Date parseJustDate(String dateToParse){
+        Date parsedDate = null;
+
+        try {
+            parsedDate = sdfJustDate.parse(dateToParse);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return parsedDate;
+    }
+
+    /**
+     * Parses a given date string to HH:mm
+     * @param  dateToParse: The date of the next race in the JSON array
+     * @return Date: Date formateted to the DateFormat in sdfJustTime
+     */
+    public static Date parseJustTime(String dateToParse){
+        Date parsedTime = null;
+        dateToParse = dateToParse.substring(0, dateToParse.length()-1);
+
+        try {
+            parsedTime = sdfJustTime.parse(dateToParse);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return parsedTime;
+    }
+
+    /**
      * Parses a given date string to yyyy-MM-dd HH:mm.
      * @param  dateToParse: The date of the next race in the JSON array
      * @return Date: Date formateted to the DateFormat in sdf
@@ -39,7 +74,7 @@ public class Utilities {
         Date parsedDate = null;
 
         try {
-            parsedDate = (Date) sdf.parse(dateToParse);
+            parsedDate = sdf.parse(dateToParse);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -55,28 +90,28 @@ public class Utilities {
         Date parsedDate = null;
 
         try {
-            parsedDate = (Date) newsSdf.parse(dateToParse);
+            parsedDate = newsSdf.parse(dateToParse);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return parsedDate;
     }
 
-    /**
-     * Parses a given date string to EEE, dd MMM yyyy HH:mm:ss z.
-     * @param  toParse: Date from an newsItem object
-     * @return Date: Date formatted to the DateFormat in sdf
-     */
-    public static String dateToString (Date toParse){
-        String parsedDateString = null;
-
-        try {
-            parsedDateString = sdf.format(toParse);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return parsedDateString;
-    }
+//    /**
+//     * Parses a given date string to yyyy-MM-dd.
+//     * @param  toParse: Date from an newsItem object
+//     * @return Date: Date formatted to the DateFormat in sdf
+//     */
+//    public static String dateToString (Date toParse){
+//        String parsedDateString = null;
+//
+//        try {
+//            parsedDateString = sdf.format(toParse);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return parsedDateString;
+//    }
 
     /**
      * Prepares the description from the telegraph feed by removing

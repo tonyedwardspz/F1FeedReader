@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -21,7 +20,6 @@ public class MyWebViewFragment extends Fragment {
     private Bundle bundle;
     private View rootView;
     private WebView newsItemWebView;
-    private WebSettings webSettings;
 
     public MyWebViewFragment(){}
 
@@ -29,17 +27,16 @@ public class MyWebViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
         rootView = inflater.inflate(R.layout.web_view, container, false);
+
         bundle = this.getArguments();
         url = bundle.getString("url");
         title = bundle.getString("title");
 
-        progress = ProgressDialog.show(getActivity(), "Fetching article",
-                title, true, true);
+        progress = ProgressDialog.show(getActivity(), "Fetching article", title, true, true);
 
         newsItemWebView = (WebView) rootView.findViewById(R.id.webView1);
         newsItemWebView.setWebViewClient(new MyWebViewClient());
-        webSettings = newsItemWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
+        newsItemWebView.getSettings().setJavaScriptEnabled(true);
 
         newsItemWebView.loadUrl(url);
 

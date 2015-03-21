@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import java.util.ArrayList;
 
-import purelywebdesign.f1feedreader.helpers.JSONHelper;
 import purelywebdesign.f1feedreader.adapters.NextRaceAdapter;
+import purelywebdesign.f1feedreader.entities.Race;
+import purelywebdesign.f1feedreader.helpers.JSONHelper;
 import purelywebdesign.f1feedreader.helpers.Utilities;
 
 
@@ -71,39 +71,18 @@ public class NextRace extends Fragment implements AdapterView.OnItemClickListene
 
     }
 
-    /**
-     * Cycles through the jsonObject looking for the next race, displaying results
-     * if a match is found.
-     * @param  jsonObject: Object containing the complete race data.
-     */
-    public static void prepareNextRaceJson(JSONObject jsonObject){
-        JSONObject thisRace;
-        String raceName = "Rubbish title";
-        String raceDate;
-        String roundNumber = "";
-        JSONArray races;
+    public static void displayData(ArrayList<Race> allRaces ) throws Exception {
 
-        try {
-            races = jsonObject.getJSONObject("MRData").getJSONObject("RaceTable").getJSONArray("Races");
-            NextRaceJSONAdapterDriver.updateData(races);
+        for (int i = 0; i < allRaces.size(); i++) {
+            Race thisRace = allRaces.get(i);
 
-            for (int i = 0; i < NextRaceJSONAdapterDriver.getCount(); i++){
-                thisRace = races.getJSONObject(i);
-                raceDate = thisRace.optString("date");
-                raceDate += " ";
-                raceDate += thisRace.optString("time");
-
-                Boolean isNextRace = Utilities.compareDate(raceDate);
-                if (isNextRace) {
-                    raceName = thisRace.optString("raceName");
-                    roundNumber = thisRace.optString("round");
-                    break;
-                }
+            if (Utilities.compareDate(thisRace.getRaceDateTime())) {
+                nextRaceRound.setText(Integer.toString(thisRace.getRound()));
+                nextRaceTitle.setText(thisRace.getRaceName());
+                break;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        nextRaceTitle.setText(raceName);
-        nextRaceRound.setText(roundNumber);
+
+
     }
 }
