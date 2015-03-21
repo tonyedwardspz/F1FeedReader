@@ -55,6 +55,7 @@ public class NewsFeed extends Fragment implements AdapterView.OnItemClickListene
 
                 Bundle bundle = new Bundle();
                 bundle.putString("url", newsAdapter.getItem(position).getUrl());
+                bundle.putString("title", newsAdapter.getItem(position).getTitle());
 
                 FragmentManager fragmentManager = getFragmentManager();
                 webFragment.setArguments(bundle);
