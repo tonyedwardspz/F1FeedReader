@@ -1,17 +1,20 @@
 package purelywebdesign.f1feedreader;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import purelywebdesign.f1feedreader.adapters.NextRaceAdapter;
 import purelywebdesign.f1feedreader.entities.Race;
 import purelywebdesign.f1feedreader.helpers.JSONHelper;
 import purelywebdesign.f1feedreader.helpers.Utilities;
@@ -22,11 +25,18 @@ public class NextRace extends Fragment implements AdapterView.OnItemClickListene
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static final String QUERY_URL = "http://ergast.com/api/f1/2015.json";
-    public static NextRaceAdapter NextRaceJSONAdapterDriver = null;
 
-    public static TextView nextRaceRound;
-    public static TextView nextRaceTitle;
+    private static TextView nextRaceRound;
+    private static TextView nextRaceTitle;
+    private static TextView nextRaceCircuit;
+    private static TextView nextRaceLocality;
+    private static TextView nextRaceCountry;
+    private static TextView nextRaceDate;
+    private static TextView nextRaceTime;
+    private static Button addToCalendar;
+    private static Button viewMap;
 
+    private static Race thisRace;
 
     public static NextRace newInstance(int sectionNumber) {
         NextRace fragment = new NextRace();
@@ -46,11 +56,32 @@ public class NextRace extends Fragment implements AdapterView.OnItemClickListene
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_next_race, container, false);
 
-        // set up the list view adapter and get the data
-        NextRaceJSONAdapterDriver = new NextRaceAdapter(getActivity(), inflater);
-
         nextRaceTitle = (TextView) rootView.findViewById(R.id.next_race_title);
         nextRaceRound = (TextView) rootView.findViewById(R.id.next_race_round);
+        nextRaceCircuit = (TextView) rootView.findViewById(R.id.next_race_circuit_name);
+        nextRaceLocality = (TextView) rootView.findViewById(R.id.next_race_locality);
+        nextRaceCountry = (TextView) rootView.findViewById(R.id.next_race_country);
+        nextRaceDate = (TextView) rootView.findViewById(R.id.next_race_date);
+        nextRaceTime = (TextView) rootView.findViewById(R.id.next_race_time);
+
+        addToCalendar = (Button) rootView.findViewById(R.id.next_race_calendar_button);
+        addToCalendar.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Toast.makeText(getActivity(),"Calendar", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        viewMap = (Button) rootView.findViewById(R.id.next_race_map_button);
+        viewMap.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                //Toast.makeText(getActivity(),"Map", Toast.LENGTH_LONG).show();
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW);
+                mapIntent.setData(Uri.parse("geo:" + thisRace.getLatitude() + "," + thisRace.getLongitude()));
+                if (mapIntent.resolveActivity(getActivity().getPackageManager()) != null){
+                    startActivity(mapIntent);
+                }
+            }
+        });
 
         JSONHelper.submitQuery(QUERY_URL, 3);
 
@@ -74,15 +105,18 @@ public class NextRace extends Fragment implements AdapterView.OnItemClickListene
     public static void displayData(ArrayList<Race> allRaces ) throws Exception {
 
         for (int i = 0; i < allRaces.size(); i++) {
-            Race thisRace = allRaces.get(i);
+            thisRace = allRaces.get(i);
 
             if (Utilities.compareDate(thisRace.getRaceDateTime())) {
-                nextRaceRound.setText(Integer.toString(thisRace.getRound()));
+                nextRaceRound.setText("Round " + Integer.toString(thisRace.getRound()));
                 nextRaceTitle.setText(thisRace.getRaceName());
+                nextRaceCircuit.setText(thisRace.getCircuitName());
+                nextRaceLocality.setText(thisRace.getLocality());
+                nextRaceCountry.setText(thisRace.getCountry());
+                nextRaceDate.setText("Race Date: " + Utilities.parseDisplayDate(thisRace.getRaceDate()));
+                nextRaceTime.setText("Start time: " + Utilities.parseDisplayTime(thisRace.getRaceTime()));
                 break;
             }
         }
-
-
     }
 }
