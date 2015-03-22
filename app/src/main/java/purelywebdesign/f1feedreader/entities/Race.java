@@ -1,11 +1,12 @@
 package purelywebdesign.f1feedreader.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Anthony on 21/03/2015.
  */
-public class Race {
+public class Race implements Serializable{
 
     private int round;
     private String url;

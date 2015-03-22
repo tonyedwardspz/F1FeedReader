@@ -26,13 +26,27 @@ import purelywebdesign.f1feedreader.entities.Race;
 public class JSONHelper {
 
     /**
-    * Retries data from an JSON api for the standings and next race info
+    * Retrieves data from an JSON api for the standings and next race info, with checks for
+    * serialized race objects.
     * @param  query_url: The REST url to call for data
     * @param  reqType: Indicates the type of request to determine where to return data.
     * 1:Driver data, 2: Constructor data, 3: Next Race Data
     * @return jsonObject: The retrieved data
     */
     public static void submitQuery(String query_url, final int reqType){
+
+        // check to see if request is for race data, and if serialised objects exist
+        if (reqType == 3){
+            ArrayList<Race> allRaces = (ArrayList<Race>)InternalStorageHelper.readObjects(NextRace.mContext, "races");
+            if (allRaces.size() > 0){
+                try {
+                    NextRace.displayData(allRaces);
+                    return;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(query_url, new JsonHttpResponseHandler(){
@@ -248,7 +262,7 @@ public class JSONHelper {
     public static void prepareRaceJson(JSONObject jsonObject){
         JSONObject thisRace;
         JSONObject circuitObj;
-        ArrayList<Race> allRaces = new ArrayList<>();
+        final ArrayList<Race> allRaces = new ArrayList<>();
         int round;
         String url;
         String raceName;
@@ -294,6 +308,14 @@ public class JSONHelper {
 
             }
             NextRace.displayData(allRaces);
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    InternalStorageHelper.writeObject(NextRace.mContext, "races", allRaces);
+                }
+            }).start();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -25,7 +25,7 @@ public class NextRace extends Fragment implements AdapterView.OnItemClickListene
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static final String QUERY_URL = "http://ergast.com/api/f1/2015.json";
-    private static Context mContext;
+    public static Context mContext;
 
     private static TextView nextRaceRound;
     private static TextView nextRaceTitle;
