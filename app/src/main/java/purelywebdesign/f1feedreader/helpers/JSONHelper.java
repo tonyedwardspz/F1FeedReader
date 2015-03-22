@@ -241,8 +241,8 @@ public class JSONHelper {
     }
 
     /**
-     * Cycles through the jsonObject looking for the next race, displaying results
-     * if a match is found.
+     * Cycles through the jsonObject, creates race objects and adds them to an ArrayList
+     * Calls the display data method of NextRace on completion
      * @param  jsonObject: Object containing the complete race data.
      */
     public static void prepareRaceJson(JSONObject jsonObject){
@@ -284,9 +284,6 @@ public class JSONHelper {
                 raceDateTime += " ";
                 raceDateTime += thisRace.optString("time");
                 raceDateTime = raceDateTime.replace(raceDateTime.substring(raceDateTime.length()-1), "");
-
-                Log.d("RaceName ", raceName);
-                Log.d("RaceTime", raceDateTime);
 
                 Race raceObject = new Race(round, url, raceName, circuitName, latitude, longitude,
                         locality, country, raceDate, raceTime, raceDateTime);

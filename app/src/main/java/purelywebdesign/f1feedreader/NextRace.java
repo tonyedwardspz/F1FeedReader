@@ -1,8 +1,6 @@
 package purelywebdesign.f1feedreader;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,11 +9,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import purelywebdesign.f1feedreader.entities.Race;
+import purelywebdesign.f1feedreader.helpers.IntentHelper;
 import purelywebdesign.f1feedreader.helpers.JSONHelper;
 import purelywebdesign.f1feedreader.helpers.Utilities;
 
@@ -67,19 +65,14 @@ public class NextRace extends Fragment implements AdapterView.OnItemClickListene
         addToCalendar = (Button) rootView.findViewById(R.id.next_race_calendar_button);
         addToCalendar.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Toast.makeText(getActivity(),"Calendar", Toast.LENGTH_LONG).show();
+                IntentHelper.calendarIntent(thisRace, getActivity());
             }
         });
 
         viewMap = (Button) rootView.findViewById(R.id.next_race_map_button);
         viewMap.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                //Toast.makeText(getActivity(),"Map", Toast.LENGTH_LONG).show();
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW);
-                mapIntent.setData(Uri.parse("geo:" + thisRace.getLatitude() + "," + thisRace.getLongitude()));
-                if (mapIntent.resolveActivity(getActivity().getPackageManager()) != null){
-                    startActivity(mapIntent);
-                }
+                IntentHelper.mapIntent(thisRace, getActivity());
             }
         });
 
