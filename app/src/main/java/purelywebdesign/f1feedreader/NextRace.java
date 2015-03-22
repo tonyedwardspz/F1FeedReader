@@ -1,6 +1,7 @@
 package purelywebdesign.f1feedreader;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ public class NextRace extends Fragment implements AdapterView.OnItemClickListene
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static final String QUERY_URL = "http://ergast.com/api/f1/2015.json";
+    private static Context mContext;
 
     private static TextView nextRaceRound;
     private static TextView nextRaceTitle;
@@ -33,6 +36,7 @@ public class NextRace extends Fragment implements AdapterView.OnItemClickListene
     private static TextView nextRaceTime;
     private static Button addToCalendar;
     private static Button viewMap;
+    private static ImageView trackImage;
 
     private static Race thisRace;
 
@@ -53,6 +57,7 @@ public class NextRace extends Fragment implements AdapterView.OnItemClickListene
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_next_race, container, false);
+        mContext = getActivity();
 
         nextRaceTitle = (TextView) rootView.findViewById(R.id.next_race_title);
         nextRaceRound = (TextView) rootView.findViewById(R.id.next_race_round);
@@ -61,6 +66,7 @@ public class NextRace extends Fragment implements AdapterView.OnItemClickListene
         nextRaceCountry = (TextView) rootView.findViewById(R.id.next_race_country);
         nextRaceDate = (TextView) rootView.findViewById(R.id.next_race_date);
         nextRaceTime = (TextView) rootView.findViewById(R.id.next_race_time);
+        trackImage = (ImageView) rootView.findViewById(R.id.track_image);
 
         addToCalendar = (Button) rootView.findViewById(R.id.next_race_calendar_button);
         addToCalendar.setOnClickListener(new View.OnClickListener(){
@@ -108,8 +114,12 @@ public class NextRace extends Fragment implements AdapterView.OnItemClickListene
                 nextRaceCountry.setText(thisRace.getCountry());
                 nextRaceDate.setText("Race Date: " + Utilities.parseDisplayDate(thisRace.getRaceDate()));
                 nextRaceTime.setText("Start time: " + Utilities.parseDisplayTime(thisRace.getRaceTime()));
+                int resId = mContext.getResources().getIdentifier(thisRace.getCircuitID(), "drawable", "purelywebdesign.f1feedreader");
+                trackImage.setImageResource(resId);
                 break;
             }
         }
     }
+
+
 }

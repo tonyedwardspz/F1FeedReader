@@ -253,6 +253,7 @@ public class JSONHelper {
         String url;
         String raceName;
         String circuitName;
+        String circuitID;
         String latitude;
         String longitude;
         String locality;
@@ -277,6 +278,7 @@ public class JSONHelper {
                 longitude = circuitObj.getJSONObject("Location").optString("long");
                 locality = circuitObj.getJSONObject("Location").optString("locality");
                 country = circuitObj.getJSONObject("Location").optString("country");
+                circuitID = circuitObj.optString("circuitId");
                 raceDate = Utilities.parseJustDate(thisRace.optString("date"));
                 raceTime = Utilities.parseJustTime(thisRace.optString("time"));
 
@@ -286,7 +288,7 @@ public class JSONHelper {
                 raceDateTime = raceDateTime.replace(raceDateTime.substring(raceDateTime.length()-1), "");
 
                 Race raceObject = new Race(round, url, raceName, circuitName, latitude, longitude,
-                        locality, country, raceDate, raceTime, raceDateTime);
+                        locality, country, raceDate, raceTime, raceDateTime, circuitID);
                 allRaces.add(raceObject);
 
 

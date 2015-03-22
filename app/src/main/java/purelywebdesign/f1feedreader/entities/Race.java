@@ -18,10 +18,11 @@ public class Race {
     private Date raceDate;
     private Date raceTime;
     private String raceDateTime;
+    private String circuitID;
 
     public Race(int round, String url, String raceName, String circuitName, String latitude,
                 String longitude, String locality, String country, Date raceDate, Date raceTime,
-                String raceDateTime) {
+                String raceDateTime, String circuitID) {
 
         this.round = round;
         this.url = url;
@@ -34,6 +35,11 @@ public class Race {
         this.raceDate = raceDate;
         this.raceTime = raceTime;
         this.raceDateTime = raceDateTime;
+        this.circuitID = circuitID;
+    }
+
+    public String getCircuitID() {
+        return circuitID;
     }
 
     public int getRound() {

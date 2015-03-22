@@ -10,14 +10,6 @@
     tools:context="purelywebdesign.f1feedreader.NextRace">
 
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/track_image"
-        android:src="@drawable/malaysia_track"
-        android:scaleType="fitEnd" />
-
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -76,8 +68,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/next_race_time"
-        android:layout_above="@id/track_image"/>
+        android:layout_below="@id/next_race_time"/>
 
     <Button
         android:layout_width="0dp"
@@ -105,5 +96,11 @@
         android:id="@+id/next_race_track_title"
         android:layout_below="@id/next_race_calendar_button"
         android:text="Track layout"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/track_image"
+        android:layout_below="@id/next_race_track_title"/>
 
 </RelativeLayout>
