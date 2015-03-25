@@ -43,7 +43,11 @@
         android:id="@+id/next_race_country"
         android:layout_below="@id/next_race_locality"/>
 
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/userLocation"
+        android:layout_below="@id/next_race_country"/>
 
 
 
@@ -53,7 +57,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/next_race_date"
-        android:layout_below="@id/next_race_country"/>
+        android:layout_below="@id/userLocation"/>
+
+
 
     <TextView
         android:layout_width="wrap_content"

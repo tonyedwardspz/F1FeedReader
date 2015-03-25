@@ -35,9 +35,15 @@ public class JSONHelper {
     */
     public static void submitQuery(String query_url, final int reqType){
 
+        ArrayList<Race> allRaces = null;
         // check to see if request is for race data, and if serialised objects exist
         if (reqType == 3){
-            ArrayList<Race> allRaces = (ArrayList<Race>)InternalStorageHelper.readObjects(NextRace.mContext, "races");
+            try{
+                allRaces = (ArrayList<Race>)InternalStorageHelper.readObjects(NextRace.mContext, "races");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             if (allRaces.size() > 0){
                 try {
                     NextRace.displayData(allRaces);

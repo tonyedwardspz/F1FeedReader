@@ -143,4 +143,18 @@ public class Utilities {
         String[] splitDescription = description.split("<");
         return splitDescription[0] + ".";
     }
+
+    public static double parseDouble(String str) {
+        double result = 0;
+        try {
+            result = Double.parseDouble(str);
+        } catch (NullPointerException npe) {
+            //sysout found null
+            return 0;
+        } catch (NumberFormatException nfe) {
+            //sysout NFE
+            return 0;
+        }
+        return result;
+    }
 }
