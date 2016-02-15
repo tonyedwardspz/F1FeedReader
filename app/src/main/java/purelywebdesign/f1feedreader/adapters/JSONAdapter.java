@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import purelywebdesign.f1feedreader.R;
-import purelywebdesign.f1feedreader.holders.NewsItemHolder;
-import purelywebdesign.f1feedreader.holders.StandingsHolder;
+import purelywebdesign.f1feedreader.Holders.NewsItemHolder;
+import purelywebdesign.f1feedreader.Holders.StandingsHolder;
 
 /**
  * Created by Anthony on 22/03/2015.

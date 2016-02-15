@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import purelywebdesign.f1feedreader.R;
 import purelywebdesign.f1feedreader.entities.NewsItem;
-import purelywebdesign.f1feedreader.holders.NewsItemHolder;
+import purelywebdesign.f1feedreader.Holders.NewsItemHolder;
 
 /**
  * Created by Anthony on 14/03/2015.

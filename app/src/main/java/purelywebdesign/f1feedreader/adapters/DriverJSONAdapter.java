@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import purelywebdesign.f1feedreader.R;
 import purelywebdesign.f1feedreader.entities.DriverStanding;
-import purelywebdesign.f1feedreader.holders.StandingsHolder;
+import purelywebdesign.f1feedreader.Holders.StandingsHolder;
 
 /**
  * Created by Anthony on 22/02/2015.
