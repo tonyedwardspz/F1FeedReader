@@ -99,11 +99,11 @@ public class JSONHelper {
 
             for (int i = 0; i < 10; i++){
                 thisItem = items.getJSONObject(i);
-                title = thisItem .optString("title");
-                description = thisItem .optString("description");
-                link = thisItem .optString("link");
-                pubDate = thisItem .optString("pubDate");
-                thumb = thisItem .getJSONArray("media:thumbnail").getJSONObject(1).optString("url");
+                title = thisItem.optString("title");
+                description = thisItem.optString("description");
+                link = thisItem.optString("link");
+                pubDate = thisItem.optString("pubDate");
+                thumb = thisItem.getJSONArray("media:thumbnail").getJSONObject(1).optString("url");
 
                 newsItem = new NewsItem( title, description, link, pubDate, thumb );
                 newsItems.add(newsItem);
@@ -120,23 +120,23 @@ public class JSONHelper {
      * Sends the array of objects to the adapter for displaying.
      */
     public static void prepareTelegraphJSON (JSONObject jsonObject){
-        ArrayList<NewsItem> newsItems = new ArrayList();
-        NewsItem newsItem;
-        JSONObject thisItem;
-        String title;
-        String description;
-        String link;
-        String pubDate;
+            ArrayList<NewsItem> newsItems = new ArrayList();
+            NewsItem newsItem;
+            JSONObject thisItem;
+            String title;
+            String description;
+            String link;
+            String pubDate;
 
         try {
             JSONArray items = getNewsItems(jsonObject);
 
             for (int i = 0; i < 10; i++){
                 thisItem = items.getJSONObject(i);
-                title = thisItem .optString("title");
+                title = thisItem.optString("title");
                 description = Utilities.prepareTelegraphDescription(thisItem.optString("description"));
-                link = thisItem .optString("link");
-                pubDate = thisItem .optString("pubDate");
+                link = thisItem.optString("link");
+                pubDate = thisItem.optString("pubDate");
 
                 newsItem = new NewsItem( title, description, link, pubDate );
                 newsItems.add(newsItem);
@@ -150,6 +150,42 @@ public class JSONHelper {
 
     public static void prepareMotorSportJSON  (JSONObject jsonObject) {
         Log.d("PREPARE:", "Prepareing the motorsport feed");
+        ArrayList<NewsItem> newsItems = new ArrayList<NewsItem>();
+        NewsItem newsItem;
+        JSONObject thisItem;
+        String title;
+        String description;
+        String link;
+        String pubDate;
+        String thumb;
+
+        try {
+            JSONArray items = getNewsItems(jsonObject);
+
+            for (int i = 0; i < 10; i++){
+                thisItem = items.getJSONObject(i);
+                title = thisItem .optString("title");
+                link = thisItem.optString("guid");
+                pubDate = thisItem.optString("pubDate");
+                thumb = thisItem.getJSONObject("enclosure").optString("url");
+
+                description = thisItem.getJSONObject("description").optString("content");
+                String[] descriptions = description.split("(?<=[.])\\s+");
+
+                if (descriptions[0].length() <= 70){
+                    description = descriptions[0] + " " + descriptions[1];
+                } else {
+                    description = descriptions[0];
+                }
+
+                newsItem = new NewsItem( title, description, link, pubDate, thumb);
+                newsItems.add(newsItem);
+            }
+
+            NewsFeed.newsAdapter.updateData(newsItems);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -172,12 +208,12 @@ public class JSONHelper {
             for (int i = 0; i < 10; i++){
                 thisItem = items.getJSONObject(i);
 
-                title = thisItem .optString("title");
-                description = thisItem .optString("description");
+                title = thisItem.optString("title");
+                description = thisItem.optString("description");
                 description = Utilities.prepareTelegraphDescription(description);
-                link = thisItem .optString("link");
-                pubDate = thisItem .optString("pubDate");
-                thumb = thisItem .getJSONObject("media:thumbnail").optString("url");
+                link = thisItem.optString("link");
+                pubDate = thisItem.optString("pubDate");
+                thumb = thisItem.getJSONObject("media:thumbnail").optString("url");
 
                 newsItem = new NewsItem( title, description, link, pubDate, thumb );
                 newsItems.add(newsItem);

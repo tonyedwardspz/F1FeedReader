@@ -46,8 +46,6 @@ public class XMLHelper {
                             case 3:
                                 JSONHelper.prepareCrashJSON(results);
                                 break;
-                            case 4:
-                                JSONHelper.prepareMotorSportJSON(results);
                         }
                     } else {
                         String result = s.replaceAll("<!\\[CDATA\\[", "");
