@@ -85,6 +85,7 @@ public class MyWebViewFragment extends Fragment {
                             "$('.article-header').remove();" +
                             "$('.article-title span').remove();" +
                             "$('.clearfix ').remove();" +
+                            "$('#rcjsload_bf95f0').remove();" +
                         "}"
                 );
             } else if (urlStart.contains("tele")){
@@ -107,6 +108,20 @@ public class MyWebViewFragment extends Fragment {
                             "$('.under').remove();" +
                             "$('.mobileAdvertInStream').remove();" +
                         "}"
+
+                );
+            } else if (urlStart.contains("moto")){
+                view.loadUrl("javascript:"+
+                                "if (document.querySelector('.outer')){" +
+                                "$('script').each(function () {" +
+                                "    $(this).remove();" +
+                                "});"+
+                                "$('.header').remove();" +
+                                "$('.secondMenu').remove();" +
+                                "$('.contentNavigSmall').remove()" +
+                                "$('.articleAuthorBox').remove()" +
+                                "$('.contentNavig').remove()" +
+                                "}"
 
                 );
             }
