@@ -35,7 +35,7 @@ public class JSONHelper {
     */
     public static void submitQuery(String query_url, final int reqType){
 
-        ArrayList<Race> allRaces = null;
+        ArrayList<Race> allRaces = new ArrayList<Race>();
         // check to see if request is for race data, and if serialised objects exist
         if (reqType == 3){
             try{
@@ -44,14 +44,14 @@ public class JSONHelper {
                 e.printStackTrace();
             }
 
-            if (allRaces.size() > 0){
+//            if (allRaces.length > 0){
                 try {
                     NextRace.displayData(allRaces);
                     return;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
+//            }
         }
 
         AsyncHttpClient client = new AsyncHttpClient();
@@ -134,7 +134,7 @@ public class JSONHelper {
             for (int i = 0; i < 10; i++){
                 thisItem = items.getJSONObject(i);
                 title = thisItem .optString("title");
-                description = Utilities.prepareTelegraphDescription(thisItem .optString("description"));
+                description = Utilities.prepareTelegraphDescription(thisItem.optString("description"));
                 link = thisItem .optString("link");
                 pubDate = thisItem .optString("pubDate");
 
@@ -146,6 +146,10 @@ public class JSONHelper {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void prepareMotorSportJSON  (JSONObject jsonObject) {
+        Log.d("PREPARE:", "Prepareing the motorsport feed");
     }
 
     /**
