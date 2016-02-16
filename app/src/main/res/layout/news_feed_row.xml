@@ -19,27 +19,36 @@
         android:textSize="20sp"
         android:typeface="normal"/>
 
-    <ImageView
-        android:id="@+id/img_thumbnail"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/newsTitle"
-        android:layout_marginEnd="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        />
+        android:id="@+id/news_wrap"
+        android:layout_below="@+id/newsTitle">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/newsSource"
-        android:layout_toEndOf="@id/img_thumbnail"
-        android:layout_below="@id/newsTitle" />
+        <ImageView
+            android:id="@+id/img_thumbnail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="100dip"
+            android:maxHeight="100dip"
+            android:adjustViewBounds="true"
+            android:layout_marginEnd="5dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/newsSource"
+            android:layout_toEndOf="@id/img_thumbnail"/>
+
+    </RelativeLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/publicationDate"
-        android:layout_below="@id/newsSource" />
+        android:layout_below="@id/news_wrap"/>
 </RelativeLayout>
